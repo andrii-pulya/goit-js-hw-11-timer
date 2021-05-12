@@ -12,15 +12,12 @@ class CountdownTimer {
     this.onTick = onTick;
   }
 start() {
-    const startTime = Date.now();
     setInterval(() => {
       const currentTime = Date.now();
-      const deltaTime = this.pad(this.targetDate) - currentTime;
+      const deltaTime = this.targetDate - currentTime;
+      console.log(deltaTime);
       const time = this.getTimeComponents(deltaTime);
-      this.onTick(time);
-      // this.onTick(time);
-      // updateClockface({ days, hours, mins, secs });
-      console.log(`${days}:${hours}:${mins}:${secs}`);
+      this.updateClockface(time);
     }, 1000);
   }
 
@@ -35,102 +32,19 @@ start() {
     const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
 
     return { days, hours, mins, secs };
-};
+  };
+  
+    updateClockface({ days, hours, mins, secs }) {
+      refs.days.textContent = days;
+      refs.hours.textContent = hours;
+      refs.mins.textContent = mins;
+      refs.secs.textContent = secs;
+  };
 };
 
 const timer = new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 17, 2019'),
-  onTick: updateClockface,
+  targetDate: new Date('Jul 17, 2021'),
 });
 
-
-
-// {
-//   start() {
-//     const startTime = Date.now();
-//     setInterval(() => {
-//       const currentTime = Date.now();
-//       const deltaTime = currentTime - startTime;
-//       const { days, hours, mins, secs } = getTimeComponents(deltaTime);
-//       updateClockface({ days, hours, mins, secs });
-//       // console.log(`${days}:${hours}:${mins}:${secs}`);
-//     }, 1000);
-//   }
-// }
-
 timer.start();
-
-function updateClockface({ days, hours, mins, secs }) {
-  refs.days.textContent = days;
-  refs.hours.textContent = hours;
-  refs.mins.textContent = mins;
-  refs.secs.textContent = secs;
-};
-
-
-
-
-
-// class CountdownTimer {
-//   constructor({ onTick, targetDate }) {
-//     this.intervalId = null;
-//     this.onTick = onTick;
-//     this.targetDate = targetDate;
-//   }
-
-//   start() {
-//     this.intervalId = setInterval(() => {
-//       if (
-//         refs.days.textContent === '00' &&
-//         refs.hours.textContent === '00' &&
-//         refs.mins.textContent === '00' &&
-//         refs.secs.textContent === '00'
-//       ) {
-//         clearInterval(this.intervalId);
-//         return;
-//       }
-//       const currentTime = Date.now();
-//       const deltaTime = this.pad(this.targetDate) - currentTime;
-//       const time = this.getTimeComponent(deltaTime);
-
-//       this.onTick(time);
-//     }, 1000);
-//   }
-
-//   check() {
-//     if (
-//       refs.days.textContent === '00' &&
-//       refs.hours.textContent === '00' &&
-//       refs.mins.textContent === '00' &&
-//       refs.secs.textContent === '00'
-//     ) {
-//       clearInterval(this.intervalId);
-//       return;
-//     }
-//     const currentTime = Date.now();
-//     const deltaTime = this.pad(this.targetDate) - currentTime;
-//     const time = this.getTimeComponent(deltaTime);
-
-//     this.onTick(time);
-//   }
-
-
-
-// const countdownTimer = new CountdownTimer({
-//   targetDate: new Date('Jan 7, 2021').getTime(),
-//   onTick: updateClockface,
-// });
-
-// function updateClockface({ days, hours, mins, secs }) {
-//   refs.days.textContent = days;
-//   refs.hours.textContent = hours;
-//   refs.mins.textContent = mins;
-//   refs.secs.textContent = secs;
-// }
-
-// countdownTimer.check();
-// countdownTimer.start();
-
-
-
